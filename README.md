@@ -11,5 +11,3 @@ npm run start
 
 Pensez à récupérer les dépendances Yarn, Composer et à
 charger les fixtures dans le container Symfony
-
-test
