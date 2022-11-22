@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+    symfony:
+        build: symfony_config
+        container_name: symfony_mercure_docker
+        ports:
+            - "8245:80"
+        volumes:
+            - ./symfony_config/vhosts:/etc/apache2/sites-enabled
+            - ./symfony_project:/var/www/symfony_project
+        restart: always
+        networks:
+            - dev
+
+
+    maildev:
+        image: maildev/maildev
+        container_name: maildev_mercure_docker
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+            - "8081:80"
+        restart: always
+        networks:
+            - dev
+
+    db:
+        image: mariadb:10.7.1
+        container_name: mariadb_mercure_docker
+        restart: always
+        volumes:
+            - db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 'ChangeMeLater'
+        networks:
+            - dev
+
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: phpmyadmin_mercure_docker
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: db
+        networks:
+            - dev
+
+    caddy:
+        image: dunglas/mercure
+        restart: unless-stopped
+        container_name: mercure_docker
+        environment:
+            # Uncomment the following line to disable HTTPS
+            SERVER_NAME: ':80'
+            MERCURE_PUBLISHER_JWT_KEY: '!ChangeMe!'
+            MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeMe!'
+            MERCURE_EXTRA_DIRECTIVES:
+                cors_origins "http://localhost:3000"
+                cors_origins "http://localhost:8245"
+#                anonymous
+        # Uncomment the following line to enable the development mode
+#        command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
+        ports:
+            - "9090:80"
+            - "443:443"
+#        volumes:
+#            - caddy_data:/data
+#            - caddy_config:/config
+        networks:
+            - dev
+
+networks:
+    dev:
+
+volumes:
+    db-data:
+#    caddy_data:
+#    caddy_config:
