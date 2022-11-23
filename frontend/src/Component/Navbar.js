@@ -1,6 +1,6 @@
 const Navbar = ({ children }) => {
   return (
-    <>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light ">
         <a class="navbar-brand" href="/">
           Nom_utilisateur_connecté
@@ -9,10 +9,10 @@ const Navbar = ({ children }) => {
           Logout
         </a>
       </nav>
-      <div >
+      <div>
         {children}
       </div>
-    </>
+    </div>
   );
 };
 

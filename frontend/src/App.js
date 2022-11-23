@@ -12,7 +12,7 @@ function App() {
     return (
         <UserProvider>
             <BrowserRouter>
-                <Navbar>
+                <Navbar/>
                 <div className="d-flex">
                     <Sidebar/>
                     <div className="col">
