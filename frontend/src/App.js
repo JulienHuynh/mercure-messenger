@@ -31,9 +31,14 @@ function App() {
             <Route
               path="/chat/:topic"
               element={
-                <NeedAuth>
-                  <ChatBox />
-                </NeedAuth>
+                  <NeedAuth>
+                      <Navbar>
+                          <div className="d-flex">
+                              <Sidebar />
+                              <ChatBox />
+                          </div>
+                      </Navbar>
+                  </NeedAuth>
               }
             />
 
