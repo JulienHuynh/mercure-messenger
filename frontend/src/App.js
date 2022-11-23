@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import NeedAuth from "./Auth/NeedAuth";
 import UserList from "./Component/UserList";
 import Sidebar from "./Component/Sidebar";
+import ChatBox from "./Component/ChatBox";
 import Login from "./Auth/Login";
 import UserProvider from "./Context/UserContext";
 
@@ -10,18 +11,23 @@ function App() {
     return (
         <UserProvider>
             <BrowserRouter>
-                <div className="col">
-                    <Routes>
-                        <Route path='/' element={
-                            <NeedAuth>
-                                <div className="d-flex">
-                                    <Sidebar/>
+                <div className="d-flex">
+                    <Sidebar/>
+                    <div className="col">
+                        <Routes>
+                            <Route path='/' element={
+                                <NeedAuth>
                                     <UserList/>
-                                </div>
-                            </NeedAuth>
-                        }/>
-                        <Route path='/login' element={<Login/>}/>
-                    </Routes>
+                                </NeedAuth>
+                            }/>
+                            <Route path='/chat/:topic' element={
+                                <NeedAuth>
+                                    <ChatBox/>
+                                </NeedAuth>
+                            }/>
+                            <Route path='/login' element={<Login/>}/>
+                        </Routes>
+                    </div>
                 </div>
             </BrowserRouter>
         </UserProvider>

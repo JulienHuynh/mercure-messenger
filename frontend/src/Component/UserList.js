@@ -38,8 +38,6 @@ export default function UserList() {
 
     }, [])
 
-    console.log(userList);
-
     return (
         <div className="w-100">
             <h1 className='m-5 text-center'>Utilisateurs</h1>
