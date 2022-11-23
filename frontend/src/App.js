@@ -3,10 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NeedAuth from "./Auth/NeedAuth";
 import UserList from "./Component/UserList";
 import Navbar from "./Component/Navbar";
+import Sidebar from "./Component/Sidebar";
 import Login from "./Auth/Login";
 import UserProvider from "./Context/UserContext";
 
 function App() {
+
   return (
     <UserProvider>
       <BrowserRouter>
@@ -16,7 +18,10 @@ function App() {
             element={
               <Navbar>
                 <NeedAuth>
-                  <UserList />
+                <div className="d-flex">
+                                    <Sidebar/>
+                                    <UserList/>
+                                </div>
                 </NeedAuth>
               </Navbar>
             }
@@ -26,6 +31,7 @@ function App() {
       </BrowserRouter>
     </UserProvider>
   );
+
 }
 
 export default App;
