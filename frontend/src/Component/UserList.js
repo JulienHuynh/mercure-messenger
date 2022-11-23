@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useBackendPing from "../Hook/useBackendPing";
+import {NavLink} from "react-router-dom";
 
 export default function UserList() {
     const [userList, setUserList] = useState([]);
@@ -43,9 +44,11 @@ export default function UserList() {
             <h1 className='m-5 text-center'>Utilisateurs</h1>
             <div className="d-flex flex-wrap justify-content-center">
                 {userList.map((user) => (
-                    <form className='w-25 mx-3 mb-3' onSubmit={handleSubmit}>
-                        <button className='btn btn-dark w-100' type='submit' value={user.id}>{user.username}</button>
-                    </form>
+                    <NavLink to={`/chat/1`} className='w-25 text-white text-decoration-none d-block text-center'>
+                        <form className='mx-3 mb-3' onSubmit={handleSubmit}>
+                            <button className='btn btn-dark w-100' type='submit' value={user.id}>{user.username}</button>
+                        </form>
+                    </NavLink>
                 ))}
             </div>
         </div>
