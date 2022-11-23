@@ -1,11 +1,11 @@
 const Navbar = ({ children }) => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light ">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
         <a class="navbar-brand" href="/">
           Nom_utilisateur_connecté
         </a>
-        <a class="navbar-brand d-flex justify-content-between" href="/login">
+        <a class="navbar-brand " href="/login">
           Logout
         </a>
       </nav>
