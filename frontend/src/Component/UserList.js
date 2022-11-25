@@ -1,13 +1,16 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useBackendPing from "../Hook/useBackendPing";
 import {NavLink} from "react-router-dom";
+import {userContext} from "../Context/UserContext";
+import useGetCurrentUser from "../Hook/useGetCurrentUser";
 
 export default function UserList() {
     const [userList, setUserList] = useState([]);
 
     const getUserList = useGetUserList();
     const backendPing = useBackendPing();
+    const currentUser = useGetCurrentUser();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,7 +47,7 @@ export default function UserList() {
             <h1 className='m-5 text-center'>Utilisateurs</h1>
             <div className="d-flex flex-wrap justify-content-center">
                 {userList.map((user) => (
-                    <NavLink to={`/chat/1`} className='w-25 text-white text-decoration-none d-block text-center'>
+                    <NavLink to={`/chat/${currentUser.userid}`+`.${user.id}`} className='w-25 text-white text-decoration-none d-block text-center'>
                         <form className='mx-3 mb-3' onSubmit={handleSubmit}>
                             <button className='btn btn-dark w-100' type='submit' value={user.id}>{user.username}</button>
                         </form>
