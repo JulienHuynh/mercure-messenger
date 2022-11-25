@@ -19,6 +19,19 @@ class ChatRepository extends ServiceEntityRepository
         parent::__construct($registry, Chat::class);
     }
 
+    public function getAllMessagesOrderByDate(string $chatTopic)
+    {
+        return $this->createQueryBuilder('chat')
+            ->andWhere('chat.topic = :val')
+            ->setParameter('val', $chatTopic)
+            ->innerJoin('chat.messages', 'messages')
+            ->addSelect('messages')
+            ->orderBy('messages.date', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
     // /**
     //  * @return Chat[] Returns an array of Chat objects
     //  */
