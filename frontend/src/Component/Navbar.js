@@ -10,7 +10,7 @@ const Navbar = ({ children }) => {
             {currentUser.username}
         </a>
         <a class="navbar-brand " href="/login">
-          Logout
+           Logout  
         </a>
       </nav>
       <div>
