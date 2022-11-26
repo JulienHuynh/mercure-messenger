@@ -6,7 +6,7 @@ export default function useGetConversation() {
 
     return function (topic) {
         return fetch(`http://localhost:8245/chat/${topic}`, {
-            method: 'GET',
+            method: 'POST',
             credentials: 'include',
             mode: 'cors',
             headers: {

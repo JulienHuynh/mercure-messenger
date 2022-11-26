@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ChatController extends AbstractController
 {
-    #[Route('/chat/{topic}', name: 'get_chat_conversation', methods: 'GET')]
+    #[Route('/chat/{topic}', name: 'get_chat_conversation', methods: 'POST')]
     public function getChatConversation(ChatRepository $chatRepository, HubInterface $hub, string $topic): JsonResponse
     {
 
@@ -23,7 +23,7 @@ class ChatController extends AbstractController
                 "https://example.com/chat/{$topic}/?topic=" . urlencode("https://example.com/my-private-topic")
             ],
             json_encode([
-                'chat' => $chatRepository->getAllMessagesOrderByDate($topic)
+                'chat' => ["test"]
             ]),
             true
         );
@@ -31,7 +31,7 @@ class ChatController extends AbstractController
         $hub->publish($update);
 
         return $this->json([
-            'message' => 'Chat sent'
+            'message' => 'Chat sent',
         ]);
     }
 }

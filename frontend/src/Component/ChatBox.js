@@ -4,6 +4,7 @@ import useGetConversation from "../Hook/useGetConversation"
 
 export default function ChatBox() {
     const [messages, setMessages] = useState([]);
+
     const {topic} = useParams();
     const getConversation = useGetConversation();
 
@@ -13,9 +14,11 @@ export default function ChatBox() {
         console.log(JSON.parse(e.data));
     }
 
-    useEffect(() => {
-        getConversation(topic).then(data => setMessages(data.chat.messages));
+    setTimeout(() => {
+        getConversation(topic).then(data => console.log(data));
+    }, 1000)
 
+    useEffect(() => {
         const url = new URL('http://localhost:9090/.well-known/mercure');
         url.searchParams.append('topic', 'https://example.com/my-private-topic');
 

@@ -1,8 +1,7 @@
-import {useEffect, useState, useContext} from "react";
+import {useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useBackendPing from "../Hook/useBackendPing";
 import {NavLink} from "react-router-dom";
-import {userContext} from "../Context/UserContext";
 import useGetCurrentUser from "../Hook/useGetCurrentUser";
 
 export default function UserList() {
