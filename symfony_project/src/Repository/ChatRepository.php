@@ -22,13 +22,14 @@ class ChatRepository extends ServiceEntityRepository
     public function getAllMessagesOrderByDate(string $chatTopic)
     {
         return $this->createQueryBuilder('chat')
-            ->andWhere('chat.topic = :val')
-            ->setParameter('val', $chatTopic)
             ->innerJoin('chat.messages', 'messages')
-            ->addSelect('messages')
+            ->innerJoin('messages.user', 'user')
+            ->addSelect('messages.content, messages.date, user.username')
+            ->where('chat.topic = :topic')
+            ->setParameter('topic', $chatTopic)
             ->orderBy('messages.date', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getArrayResult();
     }
 
 

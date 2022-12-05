@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import useGetConversation from "../Hook/useGetConversation"
 
 export default function ChatBox() {
@@ -14,13 +14,12 @@ export default function ChatBox() {
         console.log(JSON.parse(e.data));
     }
 
-    setTimeout(() => {
-        getConversation(topic).then(data => console.log(data));
-    }, 1000)
+    getConversation(topic).then(data => console.log(data));
 
     useEffect(() => {
         const url = new URL('http://localhost:9090/.well-known/mercure');
-        url.searchParams.append('topic', 'https://example.com/my-private-topic');
+/*        url.searchParams.append('topic', 'https://example.com/my-private-topic');*/
+        url.searchParams.append('topic', `https://example.com/chat/{topic}`);
 
         const eventSource = new EventSource(url, {withCredentials: true});
         eventSource.onmessage = handleMessage;
