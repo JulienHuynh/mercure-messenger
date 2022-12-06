@@ -6,10 +6,10 @@ const Navbar = ({ children }) => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
-        <a class="navbar-brand" href="/">
+        <a className="navbar-brand" href="/">
             {currentUser.username}
         </a>
-        <a class="navbar-brand " href="/login">
+        <a className="navbar-brand " href="/login">
           Logout
         </a>
       </nav>
