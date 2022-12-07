@@ -2,23 +2,33 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useGetConversation from "../Hook/useGetConversation"
 import useGetCurrentUser from "../Hook/useGetCurrentUser";
+import usePersistMessage from "../Hook/usePersistMessage";
 
 export default function ChatBox() {
     const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+
     const {topic} = useParams();
     const getConversation = useGetConversation();
     const currentUser = useGetCurrentUser();
+    const persistMessage = usePersistMessage();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        persistMessage(topic, newMessage, currentUser.userid);
+        setNewMessage("");
+    }
+
+    const handleChange = (e) => {
+        setNewMessage(e.target.value);
     }
 
     const handleMessage = (e) => {
         const chatData  = JSON.parse(e.data);
-        console.log(chatData);
-        let newMessages = [];
-        Object.values(chatData).forEach(x => newMessages.push(x));
-        setMessages(newMessages[0]);
+        let newChat = [];
+        Object.values(chatData.chat).forEach(x => newChat.push(x));
+        console.log(newChat);
+        setMessages(newChat);
     }
 
     useEffect(() => {
@@ -40,8 +50,8 @@ export default function ChatBox() {
             <h1 className='m-5 text-center'>Chatbox</h1>
             <div>
                 {messages.map((message) => (
-                    (message.id !== currentUser.userid) ?
-                        <div className="w-100 d-flex justify-content-start">
+                    (message.userid !== currentUser.userid) ?
+                        <div key={message.id} className="w-100 d-flex justify-content-start">
                             <div className="bg-light text-black m-3 p-3 rounded w-75">
                                 <div className="d-flex justify-content-between">
                                     <div className="fw-bold">{message.username}</div>
@@ -51,7 +61,7 @@ export default function ChatBox() {
                             </div>
                         </div>
                     :
-                        <div className="w-100 d-flex justify-content-end">
+                        <div key={message.id} className="w-100 d-flex justify-content-end">
                             <div className="bg-primary text-white m-3 p-3 rounded w-75">
                                 <div className="d-flex justify-content-between">
                                     <div className="fw-bold">{message.username}</div>
@@ -66,10 +76,9 @@ export default function ChatBox() {
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="message" className="form-label">Envoyer un message</label>
                     <div className="d-flex">
-                        <input type="textarea" id="message" className="form-control" placeholder="Écrire un nouveau message..."/>
+                        <input type="textarea" id="message" className="form-control" placeholder="Écrire un nouveau message..." onChange={handleChange} value={newMessage}/>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
-                    <input type="hidden" id="userId" value={currentUser.userid}/>
                 </form>
             </div>
         </div>
