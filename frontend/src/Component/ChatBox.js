@@ -1,8 +1,10 @@
+import React from 'react';
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useGetConversation from "../Hook/useGetConversation"
 import useGetCurrentUser from "../Hook/useGetCurrentUser";
 import usePersistMessage from "../Hook/usePersistMessage";
+import useGetTopicFromUsers from "../Hook/useGetTopicFromUsers";
 
 export default function ChatBox() {
     const [messages, setMessages] = useState([]);
@@ -12,10 +14,16 @@ export default function ChatBox() {
     const getConversation = useGetConversation();
     const currentUser = useGetCurrentUser();
     const persistMessage = usePersistMessage();
+    const currentUserId = currentUser.userid;
+
+    const authorizationToChat = () => {
+        let users = topic.split('.');
+        return users.includes(currentUserId.toString());
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        persistMessage(topic, newMessage, currentUser.userid);
+        persistMessage(topic, newMessage, currentUserId);
         setNewMessage("");
     }
 
@@ -47,31 +55,37 @@ export default function ChatBox() {
 
     return (
         <div className="w-100">
-            <h1 className='m-5 text-center'>Chatbox</h1>
-            <div>
-                {messages.map((message) => (
-                    (message.userid !== currentUser.userid) ?
-                        <div key={message.id} className="w-100 d-flex justify-content-start">
-                            <div className="bg-light text-black m-3 p-3 rounded w-75">
-                                <div className="d-flex justify-content-between">
-                                    <div className="fw-bold">{message.username}</div>
-                                    <div>{message.date.date}</div>
+            {authorizationToChat() ?
+                <React.Fragment>
+                    <h1 className='m-5 text-center'>Chatbox</h1>
+                    <div>
+                        {messages.map((message) => (
+                            (message.userid !== currentUserId) ?
+                                <div key={message.id} className="w-100 d-flex justify-content-start">
+                                    <div className="bg-light text-black m-3 p-3 rounded w-75">
+                                        <div className="d-flex justify-content-between">
+                                            <div className="fw-bold">{message.username}</div>
+                                            <div>{message.date.date}</div>
+                                        </div>
+                                        <div>{message.content}</div>
+                                    </div>
                                 </div>
-                                <div>{message.content}</div>
-                            </div>
-                        </div>
-                    :
-                        <div key={message.id} className="w-100 d-flex justify-content-end">
-                            <div className="bg-primary text-white m-3 p-3 rounded w-75">
-                                <div className="d-flex justify-content-between">
-                                    <div className="fw-bold">{message.username}</div>
-                                    <div>{message.date.date}</div>
+                                :
+                                <div key={message.id} className="w-100 d-flex justify-content-end">
+                                    <div className="bg-primary text-white m-3 p-3 rounded w-75">
+                                        <div className="d-flex justify-content-between">
+                                            <div className="fw-bold">{message.username}</div>
+                                            <div>{message.date.date}</div>
+                                        </div>
+                                        <div>{message.content}</div>
+                                    </div>
                                 </div>
-                                <div>{message.content}</div>
-                            </div>
-                        </div>
-                ))}
-            </div>
+                        ))}
+                    </div>
+                </React.Fragment>
+                :
+                <h1 className='m-5 text-center'>Vous n'êtes pas autorisé à entrer dans ce chat.</h1>
+            }
             <div className="position-fixed w-75 bottom-0 m-4">
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="message" className="form-label">Envoyer un message</label>
