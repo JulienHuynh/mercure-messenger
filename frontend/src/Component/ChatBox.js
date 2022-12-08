@@ -36,6 +36,12 @@ export default function ChatBox() {
         Object.values(chatData.chat).forEach(x => newChat.push(x));
         console.log(newChat);
         setMessages(newChat);
+        scrollDownChat();
+    }
+
+    const scrollDownChat = () => {
+        const chatbox = document.getElementById("chatbox");
+        chatbox.scrollTop = chatbox.scrollHeight;
     }
 
     useEffect(() => {
@@ -53,7 +59,7 @@ export default function ChatBox() {
     }, [])
 
     return (
-        <div className="w-100 overflow-auto" style={{height: "90vh"}}>
+        <div className="w-100 overflow-auto" style={{height: "90vh"}} id="chatbox">
             {authorizationToChat() ?
                 <React.Fragment>
                     <h1 className='m-5 text-center'>Chatbox</h1>
