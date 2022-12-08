@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import useGetConversation from "../Hook/useGetConversation"
 import useGetCurrentUser from "../Hook/useGetCurrentUser";
 import usePersistMessage from "../Hook/usePersistMessage";
-import useGetTopicFromUsers from "../Hook/useGetTopicFromUsers";
 
 export default function ChatBox() {
     const [messages, setMessages] = useState([]);
@@ -54,7 +53,7 @@ export default function ChatBox() {
     }, [])
 
     return (
-        <div className="w-100">
+        <div className="w-100 overflow-auto" style={{height: "90vh"}}>
             {authorizationToChat() ?
                 <React.Fragment>
                     <h1 className='m-5 text-center'>Chatbox</h1>

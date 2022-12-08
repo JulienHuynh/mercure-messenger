@@ -42,7 +42,7 @@ class ChatController extends AbstractController
     }
 
     #[Route('/chat/persist-message', name: 'chat_persist_message', methods: 'POST')]
-    public function persistMessage(Request $request, ChatRepository $chatRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, PrivateTopicHelper $topicHelper): JsonResponse
+    public function persistMessage(Request $request, ChatRepository $chatRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, PrivateTopicHelper $topicHelper, HubInterface $hub): JsonResponse
     {
         $topic = $request->request->get('topic');
         $content = $request->request->get('content');
@@ -71,6 +71,18 @@ class ChatController extends AbstractController
 
             $entityManager->persist($message);
             $entityManager->flush();
+
+            $update = new Update(
+                [
+                    "https://example.com/chat/{$topic}",
+                    "https://example.com/user/{$user->getId()}/?topic=" . urlencode("https://example.com/chat/{$topic}")
+                ],
+                json_encode([
+                    'chat' => $chatRepository->getAllMessagesOrderByDate($topic)
+                ]),
+            );
+
+            $hub->publish($update);
 
             return $this->json([
                 'status' => 1
