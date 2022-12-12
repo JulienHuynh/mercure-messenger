@@ -1,4 +1,3 @@
-/*
 import {useContext} from "react";
 import {userContext} from "../Context/UserContext";
 import useGetCurrentUser from "./useGetCurrentUser";
@@ -18,4 +17,4 @@ export default function useGetConversation() {
         })
             .then(res => res.json())
     }
-}*/
+}
