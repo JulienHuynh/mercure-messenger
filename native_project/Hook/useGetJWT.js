@@ -1,6 +1,3 @@
-/*
-import data from "bootstrap/js/src/dom/data";
-
 export default function useGetJWT() {
 
     return function (username, password) {
@@ -16,4 +13,4 @@ export default function useGetJWT() {
         })
             .then(data => data.json())
     }
-}*/
+}

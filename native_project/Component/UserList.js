@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import {useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useBuildTopicId from "../Hook/useBuildTopicId";
