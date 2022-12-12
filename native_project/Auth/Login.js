@@ -20,7 +20,7 @@ export default function Login(props) {
             if (data.JWT) {
                 setLoggedUser(data.JWT);
                 console.log(loggedUser);
-                props.navigation.navigate('UserList');
+                props.navigation.navigate('AfterLogScreen');
             } else {
                 console.log(data)
             }
