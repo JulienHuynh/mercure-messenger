@@ -47,24 +47,31 @@ export default function Chatbox({navigation, route}) {
 
     return (
         <View style={styles.container}>
-            <Text>Chatbox</Text>
-            <View>
+            <View style={styles.messagesContainer}>
                 {messages.map((message) => (
                     (message.userid !== currentUserId) ?
-                        <View key={message.id}>
-                            <Text>{message.username}</Text>
-                            <Text>{message.date.date}</Text>
-                            <Text>{message.content}</Text>
+                        <View style={messageStyle.hisMessageContainer}>
+                            <View key={message.id} style={messageStyle.hisMessages}>
+                                <View style={messageStyle.sendBy}>
+                                    <Text style={messageStyle.hisMessagesColor}>{message.username}</Text>
+                                    <Text style={messageStyle.hisMessagesColor}>{message.date.date}</Text>
+                                </View>
+                                <Text style={messageStyle.hisMessagesColor}>{message.content}</Text>
+                            </View>
                         </View>
                         :
-                        <View key={message.id}>
-                            <Text>(Moi) {message.username}</Text>
-                            <Text>{message.date.date}</Text>
-                            <Text>{message.content}</Text>
+                        <View style={messageStyle.myMessageContainer}>
+                            <View key={message.id} style={messageStyle.myMessages}>
+                                <View style={messageStyle.sendBy}>
+                                    <Text style={messageStyle.myMessagesColor}>{message.username}</Text>
+                                    <Text style={messageStyle.myMessagesColor}>{message.date.date}</Text>
+                                </View>
+                                <Text style={messageStyle.myMessagesColor}>{message.content}</Text>
+                            </View>
                         </View>
                 ))}
             </View>
-            <View>
+            <View style={messageStyle.inputMessage}>
                 <InputCustom
                     placeholder="Votre message..."
                     value={newMessage}
@@ -82,6 +89,53 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
     },
+    messagesContainer: {
+        width: '100%',
+    }
+});
+const messageStyle = StyleSheet.create({
+    hisMessageContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'right',
+        marginRight: '20px',
+    },
+    myMessageContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'left',
+        marginLeft: '20px',
+    },
+    hisMessages: {
+        backgroundColor: '#F8F9FA',
+        maxWidth: '80%',
+        padding: '20px',
+        marginTop: '5px',
+        marginBottom: '5px',
+    },
+    myMessages: {
+        backgroundColor: '#0000FF',
+        maxWidth: '80%',
+        padding: '20px',
+        marginTop: '5px',
+        marginBottom: '5px',
+    },
+    myMessagesColor: {
+        color: '#FFFFFF',
+    },
+    hisMessagesColor: {
+        color: '#000000',
+    },
+    sendBy: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    inputMessage: {
+        position: 'fixed',
+        bottom: '0',
+        width: '100%',
+        padding: '10px',
+        backgroundColor: '#ffffff',
+    }
 });
