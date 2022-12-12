@@ -10,12 +10,15 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 export default function AfterLogScreen() {
 
     const Drawer = createDrawerNavigator();
+    const Stack = createNativeStackNavigator();
 
     return (
         <Drawer.Navigator initialRouteName="UserList">
             <Drawer.Screen name="UserList" component={UserList} options={{title: 'Liste des utilisateurs'}}/>
             <Drawer.Screen name="Chatbox" component={Chatbox} options={{title: 'Dernière conversation'}}/>
-            <Drawer.Screen name="Login" component={Login} options={{title: 'Se Déconnecter'}}/>
+            <Stack.Group screenOptions={{headerShown: false}}>
+                <Drawer.Screen name="Login" component={Login} options={{title: 'Se Déconnecter'}}/>
+            </Stack.Group>
         </Drawer.Navigator>
     );
 }
