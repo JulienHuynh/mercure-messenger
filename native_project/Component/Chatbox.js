@@ -50,8 +50,8 @@ export default function Chatbox({navigation, route}) {
             <View style={styles.messagesContainer}>
                 {messages.map((message) => (
                     (message.userid !== currentUserId) ?
-                        <View style={messageStyle.hisMessageContainer}>
-                            <View key={message.id} style={messageStyle.hisMessages}>
+                        <View key={message.id} style={messageStyle.hisMessageContainer}>
+                            <View style={messageStyle.hisMessages}>
                                 <View style={messageStyle.sendBy}>
                                     <Text style={messageStyle.hisMessagesColor}>{message.username}</Text>
                                     <Text style={messageStyle.hisMessagesColor}>{message.date.date}</Text>
@@ -60,8 +60,8 @@ export default function Chatbox({navigation, route}) {
                             </View>
                         </View>
                         :
-                        <View style={messageStyle.myMessageContainer}>
-                            <View key={message.id} style={messageStyle.myMessages}>
+                        <View key={message.id} style={messageStyle.myMessageContainer}>
+                            <View style={messageStyle.myMessages}>
                                 <View style={messageStyle.sendBy}>
                                     <Text style={messageStyle.myMessagesColor}>{message.username}</Text>
                                     <Text style={messageStyle.myMessagesColor}>{message.date.date}</Text>
