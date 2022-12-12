@@ -1,11 +1,11 @@
 import useGetTopicFromUsers from "./useGetTopicFromUsers";
-/*import useGetCurrentUser from "./useGetCurrentUser";*/
+import useGetCurrentUser from "./useGetCurrentUser";
 
 export default function useBuildTopicId() {
     const getTopicFromUsers = useGetTopicFromUsers();
-/*    const currentUser = useGetCurrentUser();*/
+    const currentUser = useGetCurrentUser();
 
     return function (otherUserId) {
-        return getTopicFromUsers(1, otherUserId);
+        return getTopicFromUsers(currentUser, otherUserId);
     }
 }
