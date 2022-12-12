@@ -6,6 +6,6 @@ export default function useBuildTopicId() {
     const currentUser = useGetCurrentUser();
 
     return function (otherUserId) {
-        return getTopicFromUsers(currentUser, otherUserId);
+        return getTopicFromUsers(currentUser.userid, otherUserId);
     }
 }
